@@ -104,10 +104,10 @@ public class Solitarie : MonoBehaviour {
             yield break;
         }
 
-        int cardQuantity = 1;
+        int cardQuantity = 7;
         int cardNum = 0;
-        for (int i = 0; i < pilesArray.Length; i++) {
-            for (int c = cardQuantity - 1; c >= 0; c--, cardNum++) {
+        for (int i = pilesArray.Length - 1; i >= 0; i--) {
+            for (int c = 0; c < cardQuantity; c++, cardNum++) {
                 yield return new WaitForSeconds(SET_PILES_WAIT_TIME);
 
                 if(cards.Count <= cardNum) {
@@ -117,7 +117,7 @@ public class Solitarie : MonoBehaviour {
 
                 Card card = cards[cardNum];
 
-                if (c == 0) {
+                if (c == cardQuantity - 1) {
                     card.UnLock();
                     card.Reveal(true);
                 } else {
@@ -126,7 +126,7 @@ public class Solitarie : MonoBehaviour {
 
                 card.EnterContainer(pilesArray[i]);
             }
-            cardQuantity++;
+            cardQuantity--;
         }
     }
 
