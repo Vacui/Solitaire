@@ -3,14 +3,24 @@ using UnityEngine;
 
 public class Pile : CardContainer {
 
-    private const float Y_OFFSET = 0.5f;
+    private const float Y_OFFSET_HIDDEN = 0.3f;
+    private const float Y_OFFSET_VISIBLE = 0.5f;
+
+    private int lastHiddenCardIndex {
+        get {
+            return cards.Where(c => c.IsVisible == false).Count();
+        }
+    }
 
     public override void AddCard(Card card) {
+
+        int lastHiddenIndex = lastHiddenCardIndex;
+
+        Vector3 cardPosition = new Vector3(transform.position.x, transform.position.y - lastHiddenIndex * Y_OFFSET_HIDDEN - (cards.Count - lastHiddenIndex) * Y_OFFSET_VISIBLE, 0 - cards.Count - 1);
+
         base.AddCard(card);
 
-        Vector3 cardPosition = new Vector3(transform.position.x, transform.position.y - Y_OFFSET * (cards.Count - 1), 0 - cards.Count);
-
-        //Debug.Log(string.Format("Adding card {0} to list position: {1}", card.ToString(), cardPosition));
+        Debug.Log(string.Format("Adding card {0} to list position: {1}", card.ToString(), cardPosition));
         card.SetPosition(cardPosition);
     }
 
