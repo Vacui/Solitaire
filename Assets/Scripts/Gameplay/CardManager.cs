@@ -172,11 +172,12 @@ public class CardManager : MonoBehaviour {
             for(int y = 0; y < tex.height; y++) {
                 int pixelIndex = x + (y * tex.width);
                 for(int i = 0; i < layers.Count; i++) {
+                    Color colorPixel = colorsArray[pixelIndex];
                     Color layerPixel = layers[i][pixelIndex];
-                    if (layerPixel.a == 1) {
+                    if (colorPixel.a == 0 || layerPixel.a == 1) {
                         colorsArray[pixelIndex] = layerPixel;
-                    }else if(layerPixel.a > 0) {
-                        colorsArray[pixelIndex] = UtilsClass.ColorBlendNormal(layerPixel, colorsArray[pixelIndex]);
+                    } else if (layerPixel.a > 0) {
+                        colorsArray[pixelIndex] = UtilsClass.ColorBlendNormal(layerPixel, colorPixel);
                     }
                 }
             }

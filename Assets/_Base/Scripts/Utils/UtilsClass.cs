@@ -209,6 +209,12 @@ namespace Utils {
         }
 
         public static Color ColorBlendNormal(Color src, Color dest) {
+            if(src.a == 0) {
+                return dest;
+            }else if(dest.a == 0) {
+                return src;
+            }
+
             float srcAlpha = src.a;
             float destAlpha = (1 - srcAlpha) * dest.a;
             Color destLayer = dest * destAlpha;
