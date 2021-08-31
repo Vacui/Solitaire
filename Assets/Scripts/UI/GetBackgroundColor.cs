@@ -8,7 +8,7 @@ public class GetBackgroundColor : MonoBehaviour {
             Debug.Log("Updating color", gameObject);
             GetComponent<Image>().color = color;
         };
-        GetComponent<Image>().color = FindObjectOfType<GameSettings>().Color;
+        GetComponent<Image>().color = GameSettings.Instance.Color;
     }
 
 }

@@ -90,8 +90,9 @@ public class CardManager : MonoBehaviour {
 
     [SerializeField, NotNull] private Card cardPrefab;
 
-    [SerializeField, NotNull] private Texture2D front;
-    [SerializeField, NotNull] private Texture2D back;
+    [SerializeField, NotNull] private Texture2D baseTex;
+    [SerializeField, NotNull] private Texture2D frontTex;
+    [SerializeField, NotNull] private Texture2D backTex;
 
     [SerializeField, ReorderableList] private TextureSuit[] texSuitsArray;
     private static Dictionary<Suits, Texture2D> texSuitsDictionary;
@@ -149,29 +150,23 @@ public class CardManager : MonoBehaviour {
         }
 
         //Debug.Log(string.Format("Generate card {0} {1}", suit, number));
-        
-        Texture2D baseTex = isVisible ? Instance.front : Instance.back;
 
-        Texture2D tex = UtilsClass.ClearTexture(baseTex.width, baseTex.height);
+        Texture2D tex = UtilsClass.ClearTexture(Instance.baseTex.width, Instance.baseTex.height);
 
         tex.wrapMode = TextureWrapMode.Clamp;
         tex.filterMode = FilterMode.Bilinear;
 
-        tex.SetPixels(baseTex.GetPixels());
-        tex.Apply();
-
-        if (!isVisible) {
-            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
-        }
-
         List<Color[]> layers = new List<Color[]>();
         Color[] colorsArray = tex.GetPixels();
 
-        layers.Add(CreateLayer(tex, baseTex, 0, 0, 0, 0));
+        layers.Add(CreateLayer(tex, Instance.baseTex, 0, 0, 0, 0, 1, GameSettings.Instance.Color));
+        layers.Add(CreateLayer(tex, isVisible ? Instance.frontTex : Instance.backTex, 0, 0, 0, 0));
 
-        layers.Add(CreateLayer(tex, texSuitsDictionary[suit], -1, -1, 20, -1, 0.8f, suit.ToColor()));
-        layers.Add(CreateLayer(tex, texNumbersDictionary[number], 10, -1, -1, 10, 1f, suit.ToColor()));
-        layers.Add(CreateLayer(tex, texSuitsDictionary[suit], 10, 10, -1, -1, 0.35f, suit.ToColor()));
+        if (isVisible) {
+            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], -1, -1, 20, -1, 0.8f, suit.ToColor()));
+            layers.Add(CreateLayer(tex, texNumbersDictionary[number], 10, -1, -1, 10, 1f, suit.ToColor()));
+            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], 10, 10, -1, -1, 0.35f, suit.ToColor()));
+        }
 
         for(int x = 0; x < tex.width; x++) {
             for(int y = 0; y < tex.height; y++) {

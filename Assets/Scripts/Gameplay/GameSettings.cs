@@ -7,6 +7,8 @@ public class GameSettings : MonoBehaviour {
 
     private const string COLOR_KEY = "color";
 
+    public static GameSettings Instance = null;
+
     private Toggle currentBackgroundToggle;
 
     [SerializeField] private Color[] colors;
@@ -30,6 +32,14 @@ public class GameSettings : MonoBehaviour {
     }
 
     public static Action<Color> NewColor;
+
+    private void Awake() {
+        if(Instance != null && Instance != this) {
+            Destroy(this);
+        }
+
+        Instance = this;
+    }
 
     private void Start() {
         toggleGroup.OnChange += (toggle) => SetBackgroundColor(toggle);
