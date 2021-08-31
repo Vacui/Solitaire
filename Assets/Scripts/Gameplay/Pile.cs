@@ -1,0 +1,48 @@
+﻿using System.Linq;
+using UnityEngine;
+
+public class Pile : CardContainer {
+
+    private const float Y_OFFSET = 0.5f;
+
+    public override void AddCard(Card card) {
+        base.AddCard(card);
+
+        Vector3 cardPosition = new Vector3(transform.position.x, transform.position.y - Y_OFFSET * (cards.Count - 1), 0 - cards.Count);
+
+        //Debug.Log(string.Format("Adding card {0} to list position: {1}", card.ToString(), cardPosition));
+        card.SetPosition(cardPosition);
+    }
+
+    public override void RemoveCard(Card card) {
+        base.RemoveCard(card);
+
+        if(cards.Count > 0) {
+            card = cards.Last();
+
+            if (card.IsVisible) {
+                return;
+            }
+            InteractionManager.AddInteraction(new UnLockInteraction(card));
+            card.UnLock();
+            InteractionManager.AddInteraction(new RevealInteraction(card));
+            card.Reveal(true);
+        }
+    }
+
+    public override Group GetGroup(Card card) {
+        Group group = base.GetGroup(card);
+
+        if(group == null) {
+            return null;
+        }
+
+        for(int i = cards.IndexOf(card) + 1; i < cards.Count; i++) {
+            group.AddCard(cards[i]);
+        }
+
+        return group;
+
+    }
+
+}
