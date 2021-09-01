@@ -69,7 +69,7 @@ public class Card : MonoBehaviour {
             return null;
         }
 
-        Debug.Log("Selected", gameObject);
+        //Debug.Log("Selected", gameObject);
 
         if (moveTweenId > 0 && LeanTween.isTweening(moveTweenId)) {
             LeanTween.cancel(moveTweenId, false);
@@ -87,7 +87,7 @@ public class Card : MonoBehaviour {
     }
 
     public void Deselect(bool checkOver, Vector3 checkPosition, Group group) {
-        Debug.Log("Deselected", gameObject);
+        //Debug.Log("Deselected", gameObject);
 
         if (checkOver) {
             IsOverCard(checkPosition, group);
@@ -97,7 +97,7 @@ public class Card : MonoBehaviour {
 
     private void IsOverCard(Vector3 checkPosition, Group group) {
 
-        Debug.Log("Is over card?", gameObject);
+        //Debug.Log("Is over card?", gameObject);
 
         RaycastHit2D hitInfo = Physics2D.Raycast(checkPosition, Vector2.zero);
 
@@ -143,13 +143,13 @@ public class Card : MonoBehaviour {
             return null;
         }
 
-        Debug.Log("Over suit is correct");
+        //Debug.Log("Over suit is correct");
 
         if ((card.InPile && !card.Number.IsPrevious(number)) || (card.InFoundation && !card.Number.IsNext(number))) {
             return null;
         }
 
-        Debug.Log("Card number is correct");
+        //Debug.Log("Card number is correct");
 
         return card.CurrentContainer;
     }
@@ -191,7 +191,7 @@ public class Card : MonoBehaviour {
             useAnim = false;
         }
 
-        Debug.Log(string.Format("Moving {0} from {1} to {2} {3} animation", name, transform.position, position, useAnim ? "with" : "without"), gameObject);
+        //Debug.Log(string.Format("Moving {0} from {1} to {2} {3} animation", name, transform.position, position, useAnim ? "with" : "without"), gameObject);
         transform.rotation = Quaternion.identity;
         originPosition = position;
 
@@ -208,7 +208,7 @@ public class Card : MonoBehaviour {
             return;
         }
 
-        Debug.Log(string.Format("Locking card {0}", name));
+        //Debug.Log(string.Format("Locking card {0}", name));
         IsLocked = true;
     }
 
@@ -218,7 +218,7 @@ public class Card : MonoBehaviour {
             return;
         }
 
-        Debug.Log(string.Format("UnLocking card {0}", name));
+        //Debug.Log(string.Format("UnLocking card {0}", name));
         IsLocked = false;
     }
 
@@ -247,7 +247,7 @@ public class Card : MonoBehaviour {
             return;
         }
 
-        Debug.Log(string.Format("Revealing card {0} {1} animation", name, useScaleAnim ? "with" : "without"));
+        //Debug.Log(string.Format("Revealing card {0} {1} animation", name, useScaleAnim ? "with" : "without"));
 
         if (InPile) {
             ScoreManager.RevealPileCard();

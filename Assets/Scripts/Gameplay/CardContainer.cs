@@ -20,7 +20,7 @@ public class CardContainer : MonoBehaviour {
             return;
         }
 
-        Debug.Log(string.Format("Adding card {0} to container {1}", card.ToString(), name));
+        //Debug.Log(string.Format("Adding card {0} to container {1}", card.ToString(), name));
 
         cards.Add(card);
     }
@@ -30,7 +30,7 @@ public class CardContainer : MonoBehaviour {
             return;
         }
 
-        Debug.Log(string.Format("Removing card {0} from container {1}", card.ToString(), name));
+        //Debug.Log(string.Format("Removing card {0} from container {1}", card.ToString(), name));
 
         cards.Remove(card);
     }

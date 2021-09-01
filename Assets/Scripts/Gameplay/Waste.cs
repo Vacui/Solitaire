@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,8 +6,8 @@ public class Waste : CardContainer {
     
     [SerializeField, Disable] private List<Card> shownCards;
     private const int MAX_Z = 25;
-    private const float X_OFFSET = 0.3f;
-    private const float ALL_X_OFFSET = 2f;
+    private const float Y_OFFSET = 0.5f;
+    private const float Y_OFFSET_BASE = 2f;
 
     protected override void Awake() {
         base.Awake();
@@ -50,12 +49,11 @@ public class Waste : CardContainer {
         }
 
         int cardsToDraw = GameSettings.DrawThree ? 3 : 1;
-        Debug.Log(cardsToDraw);
 
         for(int i = 0; i < cardsToDraw; i++) {
             Card card = cards.Last();
 
-            Debug.Log(string.Format("Drawing card {0}", card.ToString()));
+            //Debug.Log(string.Format("Drawing card {0}", card.ToString()));
 
             cards.RemoveAt(cards.Count - 1);
             InteractionManager.AddInteraction(new DrawCardInteraction(card));
@@ -76,7 +74,7 @@ public class Waste : CardContainer {
 
         Card card = shownCards.Last();
 
-        Debug.Log(string.Format("UnDrawing card {0}", card.ToString()));
+        //Debug.Log(string.Format("UnDrawing card {0}", card.ToString()));
 
         AddCard(card);
         shownCards.RemoveAt(shownCards.Count - 1);
@@ -99,7 +97,7 @@ public class Waste : CardContainer {
         for (int i = 0; i < diff; i++) {
             Card card = shownCards[i];
 
-            card.SetPosition(new Vector3(transform.position.x - ALL_X_OFFSET, transform.position.y, -i - 1), false);
+            card.SetPosition(new Vector3(transform.position.x - Y_OFFSET_BASE, transform.position.y, -i - 1), false);
 
             if (!card.gameObject.activeSelf) {
                 continue;
@@ -118,7 +116,7 @@ public class Waste : CardContainer {
 
             card.gameObject.SetActive(true);
 
-            card.SetPosition(new Vector3(transform.position.x - ALL_X_OFFSET + X_OFFSET * (i - diff), transform.position.y, -i - 1), useAnim);
+            card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE - Y_OFFSET * (i - diff), -i - 1), useAnim);
             card.Reveal(true);
 
             if (i != shownCards.Count - 1) {
@@ -127,7 +125,7 @@ public class Waste : CardContainer {
 
         }
 
-        Debug.Log("Update visual duration " + (Time.realtimeSinceStartup - start) * 1000 + "ms");
+        //Debug.Log("Update visual duration " + (Time.realtimeSinceStartup - start) * 1000 + "ms");
     }
 
     private void Recycle() {
@@ -135,7 +133,7 @@ public class Waste : CardContainer {
             return;
         }
         
-        Debug.Log("Recycling waste cards");
+        //Debug.Log("Recycling waste cards");
 
         ScoreManager.RecycleWaste();
 
@@ -158,7 +156,7 @@ public class Waste : CardContainer {
             return;
         }
                 
-        Debug.Log("Undo recycling waste cards");
+        //Debug.Log("Undo recycling waste cards");
 
         ScoreManager.UndoRecycleWaste();
 

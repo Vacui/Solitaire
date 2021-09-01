@@ -20,7 +20,7 @@ public class Pile : CardContainer {
 
         base.AddCard(card);
 
-        Debug.Log(string.Format("Adding card {0} to list position: {1}", card.ToString(), cardPosition));
+        //Debug.Log(string.Format("Adding card {0} to list position: {1}", card.ToString(), cardPosition));
         card.SetPosition(cardPosition);
     }
 
