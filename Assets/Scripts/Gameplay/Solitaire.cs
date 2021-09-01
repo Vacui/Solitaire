@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UltEvents;
 using UnityEngine;
-using Utils;
 
-public class Solitarie : MonoBehaviour {
-
-    public static Solitarie Instance;
+public class Solitaire : MonoBehaviour {
 
     private List<Card> cards;
 
@@ -20,14 +17,6 @@ public class Solitarie : MonoBehaviour {
     [SerializeField] private UltEvent WinGameEvent;
 
     public static bool IsPaused { get; private set; }
-
-    private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(gameObject);
-        }
-
-        Instance = this;
-    }
 
     public void EndGame() {
         ResetGame();

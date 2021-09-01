@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour {
     private const int RECYCLE_WASTE = -100;
 
     private void Awake() {
-        Solitarie.ResetEvent += () => {
+        Solitaire.ResetEvent += () => {
             Score = 0;
         };
     }

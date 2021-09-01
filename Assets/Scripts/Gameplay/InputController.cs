@@ -4,23 +4,13 @@ using Utils;
 
 public class InputController : MonoBehaviour {
 
-    public InputController Instance;
-
     private Vector3 touchPosition;
     private Group selectedGroup;
     private Vector3 direction;
 
-    private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(gameObject);
-        }
-
-        Instance = this;
-    }
-
     private void Update() {
 
-        if (Solitarie.IsPaused) {
+        if (Solitaire.IsPaused) {
             return;
         }
 

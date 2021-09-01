@@ -14,7 +14,7 @@ public class Waste : CardContainer {
         base.Awake();
         shownCards = new List<Card>();
 
-        Solitarie.ResetEvent += () => {
+        Solitaire.ResetEvent += () => {
             shownCards = new List<Card>();
         };
     }

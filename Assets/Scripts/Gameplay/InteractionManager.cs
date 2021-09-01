@@ -20,7 +20,7 @@ public class InteractionManager : MonoBehaviour {
     public static bool IsUndoing;
 
     private void Awake() {
-        Solitarie.ResetEvent += () => {
+        Solitaire.ResetEvent += () => {
             interactionGroups = new Stack<InteractionGroup>();
             Interactions = 0;
         };
@@ -56,7 +56,7 @@ public class InteractionManager : MonoBehaviour {
                
         openIntegrationGroup = null;
 
-        Solitarie.Instance.CheckWin();
+        Instances.Solitaire.CheckWin();
     }
 
     public void UndoInteraction() {

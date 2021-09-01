@@ -86,8 +86,6 @@ public class CardManager : MonoBehaviour {
         public Texture2D tex;
     }
 
-    public static CardManager Instance;
-
     [SerializeField, NotNull] private Card cardPrefab;
 
     [SerializeField, NotNull] private Texture2D baseTex;
@@ -100,12 +98,6 @@ public class CardManager : MonoBehaviour {
     private static Dictionary<Numbers, Texture2D> texNumbersDictionary;
 
     private void Awake() {
-        if(Instance != null && Instance != this) {
-            Destroy(gameObject);
-        }
-
-        Instance = this;
-
         GenerateDictionaries();
     }
 
@@ -131,11 +123,11 @@ public class CardManager : MonoBehaviour {
 
     public static Card GenerateCard(bool isVisible, Suits suit, Numbers number, Vector2 worldPosition) {
 
-        if(Instance == null) {
+        if(Instances.CardManager == null) {
             return null;
         }
 
-        Card newCard = Instantiate(Instance.cardPrefab.gameObject).GetComponent<Card>();
+        Card newCard = Instantiate(Instances.CardManager.cardPrefab.gameObject).GetComponent<Card>();
         newCard.Initialize(isVisible, suit, number);
         newCard.transform.position = worldPosition;
 
@@ -145,13 +137,13 @@ public class CardManager : MonoBehaviour {
 
     public static Sprite Generate(bool isVisible, Suits suit, Numbers number) {
 
-        if (Instance == null) {
+        if (Instances.CardManager == null) {
             return null;
         }
 
         //Debug.Log(string.Format("Generate card {0} {1}", suit, number));
 
-        Texture2D tex = UtilsClass.ClearTexture(Instance.baseTex.width, Instance.baseTex.height);
+        Texture2D tex = UtilsClass.ClearTexture(Instances.CardManager.baseTex.width, Instances.CardManager.baseTex.height);
 
         tex.wrapMode = TextureWrapMode.Clamp;
         tex.filterMode = FilterMode.Bilinear;
@@ -159,8 +151,8 @@ public class CardManager : MonoBehaviour {
         List<Color[]> layers = new List<Color[]>();
         Color[] colorsArray = tex.GetPixels();
 
-        layers.Add(CreateLayer(tex, Instance.baseTex, 0, 0, 0, 0, 1, GameSettings.Instance.Color));
-        layers.Add(CreateLayer(tex, isVisible ? Instance.frontTex : Instance.backTex, 0, 0, 0, 0));
+        layers.Add(CreateLayer(tex, Instances.CardManager.baseTex, 0, 0, 0, 0, 1, Instances.GameSettings.Color));
+        layers.Add(CreateLayer(tex, isVisible ? Instances.CardManager.frontTex : Instances.CardManager.backTex, 0, 0, 0, 0));
 
         if (isVisible) {
             layers.Add(CreateLayer(tex, texSuitsDictionary[suit], -1, -1, 20, -1, 0.8f, suit.ToColor()));

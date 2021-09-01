@@ -9,7 +9,7 @@ public class CardContainer : MonoBehaviour {
     protected virtual void Awake() {
         cards = new List<Card>();
 
-        Solitarie.ResetEvent += () => {
+        Solitaire.ResetEvent += () => {
             cards = new List<Card>();
             GetComponent<BoxCollider2D>().enabled = true;
         };
