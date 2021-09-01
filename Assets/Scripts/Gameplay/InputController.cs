@@ -4,7 +4,7 @@ using Utils;
 
 public class InputController : MonoBehaviour {
 
-    private Vector3 touchPosition;
+    private Vector3 clickPosition;
     private Group selectedGroup;
     private Vector3 direction;
 
@@ -17,16 +17,16 @@ public class InputController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             //Debug.Log("Click!");
 
-            touchPosition = UtilsClass.GetMouseWorldPosition();
+            clickPosition = UtilsClass.GetMouseWorldPosition();
 
             if (selectedGroup != null) {
-                selectedGroup.Deselect(touchPosition);
+                selectedGroup.Deselect(clickPosition);
             }
             selectedGroup = null;
 
-            RaycastHit2D[] hitInfoArray = Physics2D.RaycastAll(touchPosition, Vector2.zero, 130f);
+            RaycastHit2D[] hitInfoArray = Physics2D.RaycastAll(clickPosition, Vector2.zero, 130f);
 
-            touchPosition.z = 0f;
+            clickPosition.z = 0f;
 
             if (hitInfoArray.Length > 0 && hitInfoArray.First().collider != null) {
 
@@ -53,9 +53,9 @@ public class InputController : MonoBehaviour {
                 return;
             }
 
-            touchPosition = UtilsClass.GetMouseWorldPosition();
+            clickPosition = UtilsClass.GetMouseWorldPosition();
 
-            selectedGroup.MoveTo(touchPosition);
+            selectedGroup.MoveTo(clickPosition);
         }
 
         if (Input.GetMouseButtonUp(0)) {
@@ -63,13 +63,13 @@ public class InputController : MonoBehaviour {
                 return;
             }
 
-            selectedGroup.Deselect(touchPosition);
+            selectedGroup.Deselect(clickPosition);
             selectedGroup = null;
         }
     }
 
     private void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(touchPosition, 1);
+        Gizmos.DrawWireSphere(clickPosition, 1);
     }
 
 }

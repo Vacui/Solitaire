@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,13 +9,37 @@ public class GameSettings : MonoBehaviour {
     private Toggle currentBackgroundToggle;
 
     [SerializeField] private Color[] colors;
-    public Color Color {
+    private int colorIndex {
         get {
-            return colors[toggles.IndexOf(currentBackgroundToggle)];
+            return Mathf.Clamp(PlayerPrefs.GetInt(COLOR_KEY), 0, colors.Length - 1);
+        }
+        set {
+
+            if (colors == null || colors.Length <= 0) {
+                Debug.LogWarning("No colors");
+                return;
+            }
+
+            Debug.Log("Set color: " + value);
+
+            if (value >= colors.Length) {
+                value = 0;
+            } else if (value < 0) {
+                value = colors.Length - 1;
+            }
+
+            Camera.main.backgroundColor = colors[value];
+
+            PlayerPrefs.SetInt(COLOR_KEY, value);
+
+            NewColor?.Invoke(Color);
         }
     }
-    [SerializeField] private List<Toggle> toggles;
-    [SerializeField] private CustomToggleGroup toggleGroup;
+    public Color Color {
+        get {
+            return colors[colorIndex];
+        }
+    }
 
     private const string DRAW_MODE_KEY = "draw";
     public static bool DrawThree {
@@ -24,46 +47,18 @@ public class GameSettings : MonoBehaviour {
             return PlayerPrefs.GetInt(DRAW_MODE_KEY) == 1;
         }
         set {
-            Debug.Log(value);
             PlayerPrefs.SetInt(DRAW_MODE_KEY, value ? 1 : 0);
         }
     }
 
     public static Action<Color> NewColor;
 
-    private void Start() {
-        toggleGroup.OnChange += (toggle) => SetBackgroundColor(toggle);
-        UpdateVisuals();
+    public void NextColor() {
+        colorIndex++;
     }
 
-    public void UpdateVisuals() {
-        int colorIndex = PlayerPrefs.GetInt(COLOR_KEY);
-        toggles[colorIndex].isOn = true;
-        SetBackgroundColor(colorIndex);
-    }
-
-    private void SetBackgroundColor(Toggle toggle) {
-        SetBackgroundColor(toggles.IndexOf(toggle));
-    }
-
-    public void SetBackgroundColor(int index) {
-        if(currentBackgroundToggle != null && currentBackgroundToggle != toggles[index]) {
-            currentBackgroundToggle.isOn = false;
-        }
-
-        currentBackgroundToggle = toggles[index];
-
-        if(colors == null || colors.Length <= index) {
-            Debug.LogWarning("No colors");
-            return;
-        }
-
-        Debug.Log("Set color: " + index);
-
-        Color color = colors[index];
-        Camera.main.backgroundColor = colors[index];
-        PlayerPrefs.SetInt(COLOR_KEY, index);
-        NewColor?.Invoke(color);
+    public void PrevColor() {
+        colorIndex--;
     }
 
     public void SetDrawMode(bool draw) {
