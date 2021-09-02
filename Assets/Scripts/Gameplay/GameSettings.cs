@@ -28,10 +28,9 @@ public class GameSettings : MonoBehaviour {
                 value = colors.Length - 1;
             }
 
-            Camera.main.backgroundColor = colors[value];
-
             PlayerPrefs.SetInt(COLOR_KEY, value);
 
+            Camera.main.backgroundColor = Color;
             NewColor?.Invoke(Color);
         }
     }

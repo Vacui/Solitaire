@@ -209,9 +209,9 @@ namespace Utils {
         }
 
         public static Color ColorBlendNormal(Color src, Color dest) {
-            if(src.a == 0) {
-                return dest;
-            }else if(dest.a == 0) {
+            if (src.a == 0) {
+                return new Color(dest.r, dest.g, dest.b, 0);
+            } else if (dest.a == 0) {
                 return src;
             }
 
