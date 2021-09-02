@@ -4037,7 +4037,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 900, y: 0}
+  m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &725816958
 MonoBehaviour:
@@ -4052,7 +4052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 1
-  m_AspectRatio: 3.7198582
+  m_AspectRatio: 3.121302
 --- !u!1 &734523635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5970,8 +5970,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -10, y: 50}
+  m_AnchoredPosition: {x: -7.5, y: 30}
+  m_SizeDelta: {x: -15, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1102585283
 MonoBehaviour:
