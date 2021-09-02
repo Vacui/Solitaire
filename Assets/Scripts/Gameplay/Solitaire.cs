@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UltEvents;
 using UnityEngine;
+using Utils;
 
 public class Solitaire : MonoBehaviour {
 
@@ -17,6 +17,15 @@ public class Solitaire : MonoBehaviour {
     [SerializeField] private UltEvent WinGameEvent;
 
     public static bool IsPaused { get; private set; }
+    private static string seed;
+    public static string Seed {
+        get { return seed; }
+        private set {
+            seed = value;
+            NewSeed?.Invoke(seed);
+        }
+    }
+    public static Action<string> NewSeed;
 
     public void EndGame() {
         ResetGame();
@@ -39,7 +48,9 @@ public class Solitaire : MonoBehaviour {
         GenerateCards(restart);
 
         if (!restart) {
-            cards = cards.OrderBy(i => Guid.NewGuid()).ToList();
+            Guid seed = Guid.NewGuid();
+            Seed = seed.ToString();
+            cards.ShuffleUsingRandom(seed.GetHashCode());
         }
 
         StartCoroutine(SetPiles());
