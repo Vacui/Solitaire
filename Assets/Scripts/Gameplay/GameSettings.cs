@@ -53,6 +53,10 @@ public class GameSettings : MonoBehaviour {
 
     public static Action<Color> NewColor;
 
+    private void Awake() {
+        colorIndex = colorIndex;
+    }
+
     public void NextColor() {
         colorIndex++;
     }
