@@ -97,7 +97,7 @@ public class Waste : CardContainer {
         for (int i = 0; i < diff; i++) {
             Card card = shownCards[i];
 
-            card.SetPosition(new Vector3(transform.position.x - Y_OFFSET_BASE, transform.position.y, -i - 1), false);
+            card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE, -i - 1), false);
 
             if (!card.gameObject.activeSelf) {
                 continue;
