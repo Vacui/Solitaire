@@ -24,8 +24,8 @@ namespace Utils {
         }
 
         // source: https://stackoverflow.com/a/1262619
-        public static void ShuffleUsingRandom<T>(this IList<T> list) {
-            System.Random rng = new System.Random();
+        public static void ShuffleUsingRandom<T>(this IList<T> list, int seed) {
+            System.Random rng = new System.Random(seed);
             int n = list.Count;
             while (n > 1) {
                 n--;
