@@ -155,9 +155,9 @@ public class CardManager : MonoBehaviour {
         layers.Add(CreateLayer(tex, isVisible ? Instances.CardManager.frontTex : Instances.CardManager.backTex, 0, 0, 0, 0));
 
         if (isVisible) {
-            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], -1, -1, 20, -1, 0.8f, suit.ToColor()));
-            layers.Add(CreateLayer(tex, texNumbersDictionary[number], 10, -1, -1, 10, 1f, suit.ToColor()));
-            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], 10, 10, -1, -1, 0.35f, suit.ToColor()));
+            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], -1, -1, 20, -1, 0.7f, suit.ToColor()));
+            layers.Add(CreateLayer(tex, texNumbersDictionary[number], 13, -1, -1, 13, 1f, suit.ToColor()));
+            layers.Add(CreateLayer(tex, texSuitsDictionary[suit], 13, 13, -1, -1, 0.35f, suit.ToColor()));
         }
 
         for(int x = 0; x < tex.width; x++) {
