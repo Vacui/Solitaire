@@ -51,6 +51,8 @@ public class Waste : CardContainer {
             return;
         }
 
+        quantity = Mathf.Clamp(quantity, 0, cards.Count);
+
         StartCoroutine(DrawCardsCoroutine(quantity));
 
     }
