@@ -24,8 +24,10 @@ public class InteractionGroup {
     public void UndoInteractions() {
         Debug.Log("Undo group interactions");
 
-        foreach (Interaction subInteraction in interactions) {
-            if(subInteraction == null) {
+        for(int i = interactions.Count - 1; i >= 0; i--) {
+            Interaction subInteraction = interactions[i];
+
+            if (subInteraction == null) {
                 Debug.LogWarning("Sub Interaction is null");
                 continue;
             }
