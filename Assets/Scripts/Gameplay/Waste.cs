@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 public class Waste : CardContainer {
     
@@ -8,6 +10,7 @@ public class Waste : CardContainer {
     private const int MAX_Z = 25;
     private const float Y_OFFSET = 0.5f;
     private const float Y_OFFSET_BASE = 2f;
+    private const float DRAW_CARD_WAIT_TIME = 0.01f;
 
     protected override void Awake() {
         base.Awake();
@@ -50,7 +53,15 @@ public class Waste : CardContainer {
 
         int cardsToDraw = GameSettings.DrawThree ? 3 : 1;
 
-        for(int i = 0; i < cardsToDraw; i++) {
+        StartCoroutine(DrawCards(cardsToDraw, updateVisual));
+
+    }
+
+    private IEnumerator DrawCards(int quantity, bool updateVisual) {
+
+        InteractionManager.OpenInteraction();
+
+        for (int i = 0; i < quantity; i++) {
             Card card = cards.Last();
 
             //Debug.Log(string.Format("Drawing card {0}", card.ToString()));
@@ -58,12 +69,15 @@ public class Waste : CardContainer {
             cards.RemoveAt(cards.Count - 1);
             InteractionManager.AddInteraction(new DrawCardInteraction(card));
             shownCards.Add(card);
+
+            if (updateVisual) {
+                UpdateVisual();
+            }
+
+            yield return new WaitForSeconds(DRAW_CARD_WAIT_TIME);
         }
 
-        if (updateVisual) {
-            UpdateVisual();
-        }
-
+        InteractionManager.CloseInteraction();
     }
 
     public void UnDrawCard(bool updateVisual = true) {
@@ -94,35 +108,24 @@ public class Waste : CardContainer {
 
         int diff = Mathf.Clamp(shownCards.Count - 3, 0, shownCards.Count);
 
-        for (int i = 0; i < diff; i++) {
-            Card card = shownCards[i];
-
-            card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE, -i - 1), false);
-
-            if (!card.gameObject.activeSelf) {
-                continue;
+        if (diff > 0) {
+            for (int i = diff - 1; i < diff; i++) {
+                Card card = shownCards[i];
+                card.Lock();
             }
-
-            card.UnLock();
-            card.Reveal(false);
-            card.Lock();
-            card.gameObject.SetActive(false);
-
         }
 
         for (int i = diff; i < shownCards.Count; i++) {
             Card card = shownCards[i];
-            card.UnLock();
-
-            card.gameObject.SetActive(true);
 
             card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE - Y_OFFSET * (i - diff), -i - 1), useAnim);
-            card.Reveal(true);
 
             if (i != shownCards.Count - 1) {
                 card.Lock();
+            } else {
+                card.UnLock();
+                card.Reveal(true);
             }
-
         }
 
         //Debug.Log("Update visual duration " + (Time.realtimeSinceStartup - start) * 1000 + "ms");
@@ -144,10 +147,9 @@ public class Waste : CardContainer {
         InteractionManager.AddInteraction(new RecycleWasteInteraction());
         for(int i = 0; i < cardsToUnDraw; i++) {
             UnDrawCard(false);
+            UpdateVisual();
         }
-
-        UpdateVisual();
-
+        
         GetComponent<BoxCollider2D>().enabled = true;
     }
 

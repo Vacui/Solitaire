@@ -56,5 +56,13 @@ namespace Utils {
             System.Random rng = new System.Random();
             list = list.OrderBy(a => rng.Next()).ToList();
         }
+
+        public static T Last<T>(this IList<T> list, int distance) {
+            if(list.Count < distance) {
+                return default(T);
+            }
+
+            return list[list.Count - 1 - distance];
+        }
     }
 }

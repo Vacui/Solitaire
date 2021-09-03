@@ -40,9 +40,7 @@ public class InputController : MonoBehaviour {
 
                 Waste waste = hitInfoArray.First().transform.GetComponent<Waste>();
                 if(waste != null) {
-                    InteractionManager.OpenInteraction();
                     waste.DrawCard(true);
-                    InteractionManager.CloseInteraction();
                 }
             }
             
