@@ -49,8 +49,4 @@ public class CardContainer : MonoBehaviour {
         return group;
     }
 
-    public virtual void Move(Vector3 newPosition) {
-        transform.position = newPosition;
-    }
-
 }

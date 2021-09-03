@@ -40,7 +40,7 @@ public class InputController : MonoBehaviour {
 
                 Waste waste = hitInfoArray.First().transform.GetComponent<Waste>();
                 if(waste != null) {
-                    waste.DrawCard(true);
+                    waste.DrawCards(GameSettings.DrawThree ? 3 : 1);
                 }
             }
             

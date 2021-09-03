@@ -38,7 +38,7 @@ public class Waste : CardContainer {
         }
     }
 
-    public void DrawCard(bool updateVisual) {
+    public void DrawCards(int quantity) {
         if(cards.Count == 0) {
             Debug.LogWarning("No card to draw");
 
@@ -51,36 +51,41 @@ public class Waste : CardContainer {
             return;
         }
 
-        int cardsToDraw = GameSettings.DrawThree ? 3 : 1;
-
-        StartCoroutine(DrawCards(cardsToDraw, updateVisual));
+        StartCoroutine(DrawCardsCoroutine(quantity));
 
     }
 
-    private IEnumerator DrawCards(int quantity, bool updateVisual) {
-
+    private IEnumerator DrawCardsCoroutine(int quantity) {
         InteractionManager.OpenInteraction();
-
         for (int i = 0; i < quantity; i++) {
-            Card card = cards.Last();
-
-            //Debug.Log(string.Format("Drawing card {0}", card.ToString()));
-
-            cards.RemoveAt(cards.Count - 1);
-            InteractionManager.AddInteraction(new DrawCardInteraction(card));
-            shownCards.Add(card);
-
-            if (updateVisual) {
-                UpdateVisual();
-            }
-
+            DrawCard();
             yield return new WaitForSeconds(DRAW_CARD_WAIT_TIME);
         }
-
         InteractionManager.CloseInteraction();
     }
 
-    public void UnDrawCard(bool updateVisual = true) {
+    private void DrawCard() {
+        Card card = cards.Last();
+
+        Debug.Log(string.Format("Drawing card {0}", card.ToString()));
+
+        cards.RemoveAt(cards.Count - 1);
+        InteractionManager.AddInteraction(new DrawCardInteraction(card));
+        shownCards.Add(card);
+
+        UpdateVisual();
+    }
+
+    public void AddCardToShown(Card card) {
+        if (card == null) {
+            return;
+        }
+
+        shownCards.Add(card);
+        UpdateVisual();
+    }
+
+    public void UnDrawCard() {
         if(shownCards.Count <= 0) {
             Debug.LogWarning("No show card to undraw");
             return;
@@ -93,12 +98,10 @@ public class Waste : CardContainer {
         AddCard(card);
         shownCards.RemoveAt(shownCards.Count - 1);
 
-        if (updateVisual) {
-            UpdateVisual();
-        }
+        UpdateVisual();
     }
 
-    public void UpdateVisual(bool useAnim = true) {
+    public void UpdateVisual() {
 
         float start = Time.realtimeSinceStartup;
 
@@ -118,7 +121,7 @@ public class Waste : CardContainer {
         for (int i = diff; i < shownCards.Count; i++) {
             Card card = shownCards[i];
 
-            card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE - Y_OFFSET * (i - diff), -i - 1), useAnim);
+            card.SetPosition(new Vector3(transform.position.x, transform.position.y - Y_OFFSET_BASE - Y_OFFSET * (i - diff), -i - 1));
 
             if (i != shownCards.Count - 1) {
                 card.Lock();
@@ -135,7 +138,9 @@ public class Waste : CardContainer {
         if(cards.Count > 0) {
             return;
         }
-        
+
+        InteractionManager.OpenInteraction();
+
         //Debug.Log("Recycling waste cards");
 
         ScoreManager.RecycleWaste();
@@ -146,11 +151,13 @@ public class Waste : CardContainer {
 
         InteractionManager.AddInteraction(new RecycleWasteInteraction());
         for(int i = 0; i < cardsToUnDraw; i++) {
-            UnDrawCard(false);
+            UnDrawCard();
             UpdateVisual();
         }
         
         GetComponent<BoxCollider2D>().enabled = true;
+
+        InteractionManager.CloseInteraction();
     }
 
     public void UndoRecycle() {
@@ -167,10 +174,8 @@ public class Waste : CardContainer {
         int cardsToDraw = cards.Count;
 
         for (int i = 0; i < cardsToDraw; i++) {
-            DrawCard(false);
+            DrawCard();
         }
-
-        UpdateVisual();
 
         GetComponent<BoxCollider2D>().enabled = true;
     }
@@ -187,15 +192,6 @@ public class Waste : CardContainer {
         Group group = new GameObject("Group").AddComponent<Group>();
         group.AddCard(card);
         return group;
-    }
-
-    public override void Move(Vector3 newPosition) {
-        base.Move(newPosition);
-
-        foreach(Card card in cards) {
-            card.SetPosition(newPosition, false);
-        }
-        UpdateVisual(false);
     }
 
 }

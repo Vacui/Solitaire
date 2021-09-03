@@ -32,13 +32,4 @@ public class Foundation : CardContainer {
         GetComponent<BoxCollider2D>().enabled = cards.Count <= 0;
     }
 
-    public override void Move(Vector3 newPosition) {
-        base.Move(newPosition);
-
-        for(int i = 0; i < cards.Count; i++) {
-            Card card = cards[i];
-            card.SetPosition(new Vector3(newPosition.x, newPosition.y, -i - 1), false);
-        }
-    }
-
 }

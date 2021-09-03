@@ -27,14 +27,27 @@ public class InteractionManager : MonoBehaviour {
     }
 
     public static void OpenInteraction() {
+        if (IsUndoing) {
+            Debug.LogWarning("Can't opening increaction while undoing");
+            return;
+        }
+
         if (openIntegrationGroup != null) {
+            Debug.LogWarning("Closing previously open interaction");
             CloseInteraction();
         }
+
+        Debug.Log("Opening interaction");
 
         openIntegrationGroup = new InteractionGroup();
     }
 
     public static void AddInteraction(Interaction interaction) {
+        if (IsUndoing) {
+            Debug.LogWarning("Can't add interaction while undoing");
+            return;
+        }
+
         if (openIntegrationGroup == null) {
             Debug.LogWarning("No open interaction");
             return;
@@ -44,6 +57,11 @@ public class InteractionManager : MonoBehaviour {
     }
 
     public static void CloseInteraction() {
+        if (IsUndoing) {
+            Debug.LogWarning("Can't close interaction while undoing");
+            return;
+        }
+
         if (openIntegrationGroup == null) {
             Debug.LogWarning("No open interaction");
             return;
@@ -53,6 +71,8 @@ public class InteractionManager : MonoBehaviour {
             interactionGroups.Push(openIntegrationGroup);
             Interactions++;
         }
+
+        Debug.Log("Closing interaction");
                
         openIntegrationGroup = null;
 

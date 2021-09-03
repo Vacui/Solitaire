@@ -186,25 +186,17 @@ public class Card : MonoBehaviour {
         SetPosition(new Vector3(position.x, position.y, originPosition.z));
     }
 
-    public void SetPosition(Vector3 position, bool useAnim = true) {
-        if (!gameObject.activeSelf) {
-            useAnim = false;
-        }
-
+    public void SetPosition(Vector3 position) {
         //Debug.Log(string.Format("Moving {0} from {1} to {2} {3} animation", name, transform.position, position, useAnim ? "with" : "without"), gameObject);
         transform.rotation = Quaternion.identity;
         originPosition = position;
 
-        if (useAnim) {
-            moveTweenId = transform.LeanMove(originPosition, TO_ORIGIN_ANIM_DURATION).id;
-        } else {
-            transform.position = originPosition;
-        }
+        moveTweenId = transform.LeanMove(originPosition, TO_ORIGIN_ANIM_DURATION).id;
     }
 
     public void Lock() {
         if (IsLocked) {
-            Debug.LogWarning("Can't lock an already locked card");
+            //Debug.LogWarning("Can't lock an already locked card");
             return;
         }
 
@@ -214,7 +206,7 @@ public class Card : MonoBehaviour {
 
     public void UnLock() {
         if (!IsLocked) {
-            Debug.LogWarning("Can't unlock an already unlocked card");
+            //Debug.LogWarning("Can't unlock an already unlocked card");
             return;
         }
 
@@ -224,7 +216,7 @@ public class Card : MonoBehaviour {
 
     public void Hide() {
         if (!IsVisible) {
-            Debug.LogWarning("Can't hide an already hided card");
+            //Debug.LogWarning("Can't hide an already hided card");
             return;
         }
 
@@ -238,12 +230,12 @@ public class Card : MonoBehaviour {
 
     public void Reveal(bool useScaleAnim) {
         if (IsLocked) {
-            Debug.LogWarning(string.Format("Can't reveal locked card {0}", name));
+            //Debug.LogWarning(string.Format("Can't reveal locked card {0}", name));
             return;
         }
 
         if (IsVisible) {
-            Debug.LogWarning("Can't reveal an already revealed card");
+            //Debug.LogWarning("Can't reveal an already revealed card");
             return;
         }
 
@@ -265,19 +257,21 @@ public class Card : MonoBehaviour {
         }
     }
 
-    public void EnterContainer(CardContainer newContainer, bool avoidCheck = false) {
+    public void EnterContainer(CardContainer newContainer, bool addCard = true) {
         if(newContainer == currentContainer) {
             return;
         }
 
         if(currentContainer != null) {
             ScoreManager.CardEnterContainer(currentContainer, newContainer);
-
             ExitContainer();
         }
 
         currentContainer = newContainer;
-        currentContainer.AddCard(this);
+
+        if (addCard) {
+            currentContainer.AddCard(this);
+        }
     }
 
     public void ExitContainer() {

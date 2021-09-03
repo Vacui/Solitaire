@@ -62,9 +62,11 @@ public class MoveGroupInteraction : Interaction {
         base.Undo();
 
         foreach (Card card in cardsGroup) {
-            card.EnterContainer(prevContainer);
             if (prevContainer is Waste) {
-                (prevContainer as Waste).DrawCard(true);
+                card.EnterContainer(prevContainer, false);
+                (prevContainer as Waste).AddCardToShown(card);
+            } else {
+                card.EnterContainer(prevContainer);
             }
         }
     }
@@ -126,7 +128,7 @@ public class DrawCardInteraction : Interaction {
 
     public override void Undo() {
         base.Undo();
-        Object.FindObjectOfType<Waste>().UnDrawCard(true);
+        Object.FindObjectOfType<Waste>().UnDrawCard();
     }
 
     public override string ToString() {
