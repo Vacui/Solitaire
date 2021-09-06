@@ -58,12 +58,12 @@ public class Waste : CardContainer {
     }
 
     private IEnumerator DrawCardsCoroutine(int quantity) {
-        InteractionManager.OpenInteraction();
+        InteractionManager.OpenInteractionGroup();
         for (int i = 0; i < quantity; i++) {
             DrawCard();
             yield return new WaitForSeconds(DRAW_CARD_WAIT_TIME);
         }
-        InteractionManager.CloseInteraction();
+        InteractionManager.CloseInteractionGroup();
     }
 
     private void DrawCard() {
@@ -141,7 +141,7 @@ public class Waste : CardContainer {
             return;
         }
 
-        InteractionManager.OpenInteraction();
+        InteractionManager.OpenInteractionGroup();
 
         //Debug.Log("Recycling waste cards");
 
@@ -159,7 +159,7 @@ public class Waste : CardContainer {
         
         GetComponent<BoxCollider2D>().enabled = true;
 
-        InteractionManager.CloseInteraction();
+        InteractionManager.CloseInteractionGroup();
     }
 
     public void UndoRecycle() {

@@ -6957,7 +6957,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002852788}
-        m_MethodName: UndoInteraction
+        m_MethodName: UndoInteractionGroup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

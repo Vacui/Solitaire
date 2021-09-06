@@ -49,14 +49,14 @@ public class Group : MonoBehaviour {
     public void Deselect(Vector3 position) {
         StopAllCoroutines();
 
-        InteractionManager.OpenInteraction();
+        InteractionManager.OpenInteractionGroup();
         for(int i = 0; i < cards.Count; i++) {
             Card card = cards[i];
             card.Deselect(i == 0, position, this);
             card.UnLock();
             cardsRb[i].velocity = Vector2.zero;
         }
-        InteractionManager.CloseInteraction();
+        InteractionManager.CloseInteractionGroup();
 
         Destroy(gameObject);
     }

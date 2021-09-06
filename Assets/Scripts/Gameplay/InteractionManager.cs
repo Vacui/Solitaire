@@ -26,18 +26,18 @@ public class InteractionManager : MonoBehaviour {
         };
     }
 
-    public static void OpenInteraction() {
+    public static void OpenInteractionGroup() {
         if (IsUndoing) {
-            Debug.LogWarning("Can't opening increaction while undoing");
+            Debug.LogWarning("Can't opening group increaction while undoing");
             return;
         }
 
         if (openIntegrationGroup != null) {
-            Debug.LogWarning("Closing previously open interaction");
-            CloseInteraction();
+            Debug.LogWarning("Closing previously open interaction group");
+            CloseInteractionGroup();
         }
 
-        Debug.Log("Opening interaction");
+        Debug.Log("Opening interaction group");
 
         openIntegrationGroup = new InteractionGroup();
     }
@@ -56,14 +56,14 @@ public class InteractionManager : MonoBehaviour {
         openIntegrationGroup.AddInteraction(interaction);
     }
 
-    public static void CloseInteraction() {
+    public static void CloseInteractionGroup() {
         if (IsUndoing) {
-            Debug.LogWarning("Can't close interaction while undoing");
+            Debug.LogWarning("Can't close interaction group while undoing");
             return;
         }
 
         if (openIntegrationGroup == null) {
-            Debug.LogWarning("No open interaction");
+            Debug.LogWarning("No open interaction group");
             return;
         }
 
@@ -72,14 +72,14 @@ public class InteractionManager : MonoBehaviour {
             Interactions++;
         }
 
-        Debug.Log("Closing interaction");
+        Debug.Log("Closing interaction group");
                
         openIntegrationGroup = null;
 
         Instances.Solitaire.CheckWin();
     }
 
-    public void UndoInteraction() {
+    public void UndoInteractionGroup() {
 
         if (IsUndoing) {
             Debug.LogWarning("Can't undoing while undoing");
