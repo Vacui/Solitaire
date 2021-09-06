@@ -18,10 +18,10 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/.gif" height="300">
-  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/.png" height="300">
-  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/.png" height="300">
-  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/.png" height="300">
+  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/.gif" height="200">
+  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/Screen1.png" height="200">
+  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/Screen2.png" height="200">
+  <img src="https://github.com/Vacui/Solitaire/blob/main/_README%20files/Screen3.png" height="200">
 </p>
 
 <p align="center">
