@@ -30,7 +30,7 @@
 </p>
 
 ## Credits
-To speed up the development and further polish the player experience I used free icons from [Material Design Icons](https://materialdesignicons.com/), and the plugins [CodeMonkey Utils](https://unitycodemonkey.com/utils.php), [Custom Hierarchy](https://www.febucci.com/2020/10/custom-hierarchy-for-unity/), [Editor Toolbox](https://github.com/arimger/Unity-Editor-Toolbox), [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595), [PlayerPrefsEditor](https://github.com/Dysman/bgTools-playerPrefsEditor), TextMesh Pro, and [Ult Events](https://assetstore.unity.com/packages/tools/gui/ultevents-111307).
+To speed up the development and further polish the player experience I used free icons from [Material Design Icons](https://materialdesignicons.com/), some parts of the pack [52 playing cards](https://mreliptik.itch.io/playing-cards-packs-52-cards), and the plugins [CodeMonkey Utils](https://unitycodemonkey.com/utils.php), [Custom Hierarchy](https://www.febucci.com/2020/10/custom-hierarchy-for-unity/), [Editor Toolbox](https://github.com/arimger/Unity-Editor-Toolbox), [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595), [PlayerPrefsEditor](https://github.com/Dysman/bgTools-playerPrefsEditor), TextMesh Pro, and [Ult Events](https://assetstore.unity.com/packages/tools/gui/ultevents-111307).
 
 ## Contacts
 <a href="mailto:graizzaromatteo@gmail.com">
